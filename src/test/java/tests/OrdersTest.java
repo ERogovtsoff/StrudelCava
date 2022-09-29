@@ -1,9 +1,3 @@
-
-/*wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJuFrame()));
-driver.switchTo().frame(checkoutPage.getJuFrame());
-checkoutPage.closeFrame();
-driver.switchTo().parentFrame();*/
-
 package tests;
 
 import org.junit.jupiter.api.*;
@@ -32,7 +26,7 @@ public class OrdersTest {
     public void setup() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get(ConfProperties.getProperty("devHomepage"));
+        driver.get(ConfProperties.getProperty("prodHomepage"));
         checkoutPage = new CheckoutPage(driver);
         homePage = new HomePage(driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
@@ -65,6 +59,10 @@ public class OrdersTest {
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmSection()));
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmOrder()));
         js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getConfirmOrder());
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJivoChat()));
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJivoChatCloseIcon()));
+        checkoutPage.closeJivoChat();
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmOrder()));
         checkoutPage.confirmOrder();
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getContinueBtn()));
         checkoutPage.clickContinueBtn();
@@ -97,8 +95,13 @@ public class OrdersTest {
         checkoutPage.setComment(ConfProperties.getProperty("comment"));
         checkoutPage.agreeCheckout();
         checkoutPage.calculateOrder();
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmSection()));
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmOrder()));
         js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getConfirmOrder());
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJivoChat()));
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJivoChatCloseIcon()));
+        checkoutPage.closeJivoChat();
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmOrder()));
         checkoutPage.confirmOrder();
         wait.until(ExpectedConditions.invisibilityOf(checkoutPage.getConfirmOrder()));
         Assertions.assertEquals("https://payment.webpay.by/", checkoutPage.getCurrentUrl());

@@ -72,6 +72,24 @@ public class CheckoutPage {
     @FindBy(xpath = "//div[@id='custom-confirm']")
     private WebElement confirmSection;
 
+    @FindBy(xpath = "//jdiv[@id='jcont']")
+    private WebElement jivoChat;
+
+    @FindBy(xpath = "//jdiv[@id='jivo_close_button']/jdiv")
+    private WebElement jivoChatCloseIcon;
+
+    public WebElement getJivoChatCloseIcon() {
+        return jivoChatCloseIcon;
+    }
+
+    public WebElement getJivoChat() {
+        return jivoChat;
+    }
+
+    public void closeJivoChat() {
+        jivoChatCloseIcon.click();
+    }
+
     public WebElement getContinueBtn() {
         return continueBtn;
     }
